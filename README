@@ -1,0 +1,48 @@
+
+
+    gpgMimeMail --- sendding PGP email in MIME format
+    built upon: gpgMime + GnuPG 
+    
+    gpgMime --- Utilities for sending/receiving PGP email messages
+    built upon (1) GnuPG using gnupg for python and (2) codes from
+    pgp-mime by W. T. King
+
+ gpgMime is distributed in the hope that it will be useful, but WITHOUT ANY
+ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ A PARTICULAR PURPOSE.
+
+    Jay S. Liu
+    jay.s.liu@gmail.com
+    Version 0.1
+    Apr. 13, 2013
+
+-----
+
+There is an issue (#14984) entitled:
+``email.generator should always add newlines after closing boundaries``
+for python versions: Python 3.3, Python 3.2, Python 2.7
+
+***** You SHOULD resolve issue14983 on your python
+        in order to make gpgMime work for you. *****
+
+Detailed information regarding issue14983 can be obtained from:
+http://bugs.python.org/issue14983
+
+
+a diff file for python 2.7.3 generator.py is as follows:
+
+----------------------------------------------------
+@@ -227,9 +227,8 @@
+             # body-part
+             self._fp.write(body_part)
+         # close-delimiter transport-padding
+-        self._fp.write('\n--' + boundary + '--')
++        self._fp.write('\n--' + boundary + '--\n')
+         if msg.epilogue is not None:
+-            print >> self._fp
+             self._fp.write(msg.epilogue)
+
+     def _handle_multipart_signed(self, msg):
+----------------------------------------------------
+
+
