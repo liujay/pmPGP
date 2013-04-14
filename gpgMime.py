@@ -73,7 +73,7 @@ from email.generator import Generator
 __version__ = '0.1.4'
 
 def _flatten(message):
-    fp = StringIO()
+    fp = cStringIO.StringIO()
     g = Generator(fp, mangle_from_=False)
     g.flatten(message)
     return fp.getvalue()
