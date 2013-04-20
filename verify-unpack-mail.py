@@ -1,6 +1,7 @@
+# -*- coding: UTF-8 -*-
 """
-Using gpgMime to verify/decrypt email mime messages, and
-    unpack the message if all things go right.
+    Using gpgMime to verify/decrypt PGP/MIME messages, and
+        unpack messages if all things go right.
 
     Jay S. Liu
     jay.s.liu@gmail.com

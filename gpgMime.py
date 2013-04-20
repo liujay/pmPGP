@@ -1,8 +1,8 @@
 # -*- coding: UTF-8 -*-
 """
-    gpgMime --- Utilities for sending/receiving PGP email messages
-    built upon (1) GnuPG using gnupg for python and (2) codes from
-    pgp-mime by W. T. King
+    gpgMime --- Utilities for prepareing/processing PGP/MIME (RFC3156) messages
+    built upon (1) GnuPG via gnupg for python, and
+               (2) codes from pgp-mime by W. Trevor King
 
  gpgMime is distributed in the hope that it will be useful, but WITHOUT ANY
  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
@@ -11,7 +11,7 @@
     Jay S. Liu
     jay.s.liu@gmail.com
     Version 0.1
-    Apr. 13, 2013
+    Apr. 21, 2013
 """
 
 """
@@ -46,23 +46,6 @@ Documented by: Jay S. Liu
                Apr. 1, 2013
 
 """
-
-# Copyright (C) 2012 W. Trevor King <wking@tremily.us>
-#
-# This file is part of pgp-mime.
-#
-# pgp-mime is free software: you can redistribute it and/or modify it under the
-# terms of the GNU General Public License as published by the Free Software
-# Foundation, either version 3 of the License, or (at your option) any later
-# version.
-#
-# pgp-mime is distributed in the hope that it will be useful, but WITHOUT ANY
-# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License along with
-# pgp-mime.  If not, see <http://www.gnu.org/licenses/>.
-
 import os, copy, email
 import tempfile, cStringIO
 from email.mime.application import MIMEApplication as _MIMEApplication

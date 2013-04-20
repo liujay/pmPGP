@@ -1,20 +1,29 @@
 
+pmPGP --- poor men's PGP/MIME
 
-    gpgMimeMail --- sendding PGP email in MIME format
+    gpgMimeMail --- sendding PGP/MIME (RFC3156) email messages
     built upon: gpgMime + GnuPG 
-    
-    gpgMime --- Utilities for sending/receiving PGP email messages
-    built upon (1) GnuPG using gnupg for python and (2) codes from
-    pgp-mime by W. T. King
 
- gpgMime is distributed in the hope that it will be useful, but WITHOUT ANY
- WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- A PARTICULAR PURPOSE.
+    verify-unpack-mail --- verify and unpack PGP/MIME messages
+    built upon: gpgMime + GnuPG
+
+    gpgMime --- Utilities for preparing/processing PGP email messages
+    built upon (1) GnuPG via gnupg for python, and
+               (2) codes from pgp-mime by W. Trevor King
+
+    pmPGP is distributed in the hope that it will be useful, but WITHOUT ANY
+    WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+    A PARTICULAR PURPOSE.
 
     Jay S. Liu
     jay.s.liu@gmail.com
     Version 0.1
     Apr. 13, 2013
+
+
+Licence
+=======
+This project is distributed under the 'GNU General Public License Version 3.'
 
 -----
 

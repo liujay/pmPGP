@@ -1,12 +1,21 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 """
-    sendding PGP email in MIME format
-    built upon: gpgMime 
+    sending PGP/MIME (RCF3156) messages
+    built upon: gpgMime
+
+    gpgMimeMail supports sending emails in the following formats:
+        1. plain -- regular email
+        2. sign -- RFC3156
+        3. encrypt -- RFC3156
+        4. sign-encrypt -- RFC3156
+        5. Sencrypt -- Symmetric encryption using passphrase
+                        (for fun and personal usage)
+        6. sign-Sencrypt -- (for fun and personal usage)
     
     By: Jay S. Liu
         jay.s.liu@gmail.com
-        Apr. 4, 2013
+        Apr. 21, 2013
         Version 0.1.4
 """
 
@@ -145,10 +154,10 @@ if __name__ == '__main__':
         help='add attachment(s) to your message')
     parser.add_argument(
         '-d', '--directory', metavar='DIRECTORY',
-        help='add a directory to your message')
+        help='add all files in the specified directory to your message')
     parser.add_argument(
         '-m', '--mode', default='sign', metavar='MODE',
-        choices=['sign', 'encrypt', 'sign-encrypt', 'plain', 'Sencrypt'],
+        choices=['sign', 'encrypt', 'sign-encrypt', 'plain', 'Sencrypt', 'sign-Sencrypt'], 
         help='encryption mode')
     parser.add_argument(
         '-s', '--sign-as', metavar='KEY',
@@ -158,8 +167,10 @@ if __name__ == '__main__':
         help="subject of this email")
     parser.add_argument(
         '-p', '--passphrase', metavar='PASSPHRASE',
-        help="gpg private key passphrase for signer\
-        or passphrase for symmetric encryption")
+        help="gpg private key passphrase for signer")
+    parser.add_argument(
+        '-P', '--passphraseSYM', metavar='PASSPHRASE--Encryption',
+        help="passphrase for symmetric encryption")
     parser.add_argument(
         '--output', action='store_const', const=True,
         help="don't mail the generated message, print it to stdout instead")
@@ -253,13 +264,30 @@ if __name__ == '__main__':
         msgBody = gpgMime.sign_and_encrypt(body, toAddrs, gpg, **kwds)
     elif args.mode == 'Sencrypt':
         #
-        # only symmetric encryption is supported, NO signature
-        #
-        assert 'passphrase' in kwds, kwds
+        # symmetric encryption only, NO signature
+        #   this function is provided for fun and for personal usage
+        try:
+            del kwds['passphrase']
+        except KeyError:
+            pass
+        assert args.passphraseSYM, kwds
+        kwds['passphrase'] = args.passphraseSYM
         kwds['symmetric'] = True
-        #kwds['sign'] = None
         del kwds['keyid']
         msgBody = gpgMime.encrypt(body, None, gpg, **kwds)
+    elif args.mode == 'sign-Sencrypt':
+        #
+        # sign and symmetric encryption
+        #   this function is provided for fun and for personal usage
+        assert 'passphrase' in kwds, kwds
+        assert args.passphraseSYM, kwds
+        signedMsg = gpgMime.sign(body, gpg, **kwds)
+        # preparation for symmetric encryption
+        kwds['symmetric'] = True
+        del kwds['keyid']
+        del kwds['passphrase']
+        kwds['passphrase'] = args.passphraseSYM
+        msgBody = gpgMime.encrypt(signedMsg, None, gpg, **kwds)
     elif args.mode == 'plain':
         msgBody = body
     else:
